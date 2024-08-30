@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>倒计时页面</title>
+    <style>
+        @font-face {
+            font-family: 'YeZiGongChangXiaKeXing';
+            src: url('YeZiGongChangXiaKeXing-2.ttf') format('truetype');
+        }
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-image: url('1.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        .countdown-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .title, .text {
+            color: white;
+            text-shadow: 1px 1px 2px black;
+            text-align: center;
+        }
+        .title {
+            font-family: 'YeZiGongChangXiaKeXing', sans-serif;
+            font-size: 80px;
+            margin-bottom: 30px;
+            font-weight: bold;
+            font-style:normal;
+        }
+        .text {
+            font-size: 32px;
+            margin-bottom: 50px;
+        }
+        #countdown {
+            font-size: 85px;
+            color: rgb(255, 0, 0);
+            font-weight: bold;
+        }
+        .countdown-digit {
+            display: inline-block;
+            margin: 0 5px;
+            padding: 20px;
+            background-color: white;
+            color: red;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            font-weight: bold;
+            width: 100px;
+            height: 100px;
+        }
+        .countdown-colon {
+            font-size: 96px;
+            color: white;
+            margin: 0 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="countdown-container">
+    <div>
+        <div class="title">苦战到今天的红蓝侠客们,辛苦啦!</div>
+        <div class="text">铁壁关山阻且长，百炼成钢志愈昂。攻防磨砺三秋月，今朝回首满堂光。</div>
+        <div class="text">默默守护无声处，初心不改守家邦。中秋将至安如磐，万里河山铸铁墙。</div>
+    </div>
+    <div id="countdown"></div>
+
+</div>
+
+<script>
+    // 设置倒计时的结束时间（2024年8月30日 21:00:00）
+    var endDate = new Date('August 30, 2024 21:00:00').getTime();
+
+    var updateCountdown = function() {
+        var now = new Date().getTime();
+        var distance = endDate - now;
+
+        // 如果倒计时结束
+        if (distance < 0) {
+            clearInterval(countdownInterval);
+            document.getElementById('countdown').innerHTML = '00:00:00';
+            return;
+        }
+
+        // 计算小时、分钟和秒数
+        var hours = Math.floor(distance / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // 格式化显示时间
+        hours = (hours < 10) ? "0" + hours : hours;
+        minutes = (minutes < 10) ? "0" + minutes : minutes;
+        seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+        // 更新页面上的倒计时显示
+        document.getElementById('countdown').innerHTML = `
+            <span class="countdown-digit">${hours}</span><span class="countdown-colon">:</span>
+            <span class="countdown-digit">${minutes}</span><span class="countdown-colon">:</span>
+            <span class="countdown-digit">${seconds}</span>
+        `;
+    };
+
+    // 设置定时器每秒更新倒计时
+    var countdownInterval = setInterval(updateCountdown, 1000);
+
+    // 初始更新
+    updateCountdown();
+</script>
+
+
+</body>
+</html>
